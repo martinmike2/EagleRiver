@@ -1,5 +1,5 @@
 <h1>Login</h1>
-{{ FormLLopen(array('route' => 'sessions.store')) }}
+{{ Form::open(array('route' => 'sessions.store')) }}
 <ul>
 	<li>
 		{{ Form::label('username', 'Username') }}
