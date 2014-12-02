@@ -1,17 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Input;
 class SessionsController extends \BaseController {
-
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
-
 
 	/**
 	 * Show the form for creating a new resource.
@@ -31,45 +21,13 @@ class SessionsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		//TODO: Validation
+		$input = Input::all();
+		
+		if(Auth::attempt(['username'=>$input['username'],'password'=>$input['password']])) return Redirect::route('employees.index');
+		
+		return Redirect::back();
 	}
-
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
 
 	/**
 	 * Remove the specified resource from storage.
@@ -77,9 +35,11 @@ class SessionsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		//
+		Auth::logout();
+		
+		return Redirect::home();
 	}
 
 

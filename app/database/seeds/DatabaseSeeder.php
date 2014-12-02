@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder {
 
 	/**
@@ -11,7 +12,26 @@ class DatabaseSeeder extends Seeder {
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		$this->call('UserTableSeeder');
+		$this->call('EmployeeTableSeeder');
 	}
 
+}
+
+class EmployeeTableSeeder extends Seeder{
+	public function run()
+	{
+		DB::table('employees')->delete();
+		Employee::create(array('firstName'=>'John', 'lastName'=>'Doe', 'employeeGender'=>'M', 'dateOfHire'=>'23-Jul-1987 16:05:27', 'terminationDate'=>'NULL'));
+		Employee::create(array('firstName'=>'Jane', 'lastName'=>'Doe', 'employeeGender'=>'F', 'dateOfHire'=>'02-Jan-1997 01:25:56', 'terminationDate'=>'NULL'));
+		Employee::create(array('firstName'=>'Daffy', 'lastName'=>'Duck','employeeGender'=>'M', 'dateOfHire'=>'15-May-2014 16:05:27', 'terminationDate'=>'NULL'));	
+	}
+}
+
+class UserTableSeeder extends Seeder{
+	public function run(){
+		DB::table('users')->delete();
+		User::create(array('username'=>'admin', 'password'=>Hash::make('admin')));
+	}
+	
 }

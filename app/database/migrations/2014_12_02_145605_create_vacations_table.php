@@ -13,13 +13,13 @@ class CreateVacationsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('vacations', function (Blueprint $table){
-			$table->increments('id');
-			$table->integer('emp_id');
-			$table->date('start');
-			$table->date('end');
+		Schema::create('vacations', function(Blueprint $table){
+			$table->increments('Id');
+			$table->integer('employee_id');
+			$table->dateTime('startDate');
+			$table->integer('noOfDays');
 			$table->timestamps();
-		});
+		});	
 	}
 
 	/**
