@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-			'database'  => 'forge',
-			'username'  => 'forge',
-			'password'  => '',
+			'host'      => 'eaglerivertask.mysql.eu1.frbit.com',
+			'database'  => 'eaglerivertask',
+			'username'  => 'eaglerivertask',
+			'password'  => 'ytrcVz8WsIayB8TK',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
