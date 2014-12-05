@@ -1,6 +1,4 @@
 <?php
-
-use Illuminate\Validation\Factory as Validator;
 use Illuminate\Support\Facades\Redirect;
 
 class VacationController extends \BaseController {
@@ -36,11 +34,14 @@ class VacationController extends \BaseController {
 	{
 		
 		$input = Input::all();
-		try {
-			$this->validate($input);
-		} catch (Exception $e) {
-			return Redirect::back();
-		}	
+
+		$validation = $this->validate($input);
+		
+		if($validation->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validation);
+		}
+		
 		$vacation = new Vacation();
 		$vacation->startDate = $input['startDate'];
 		$vacation->noOfDays = $input['numOfDays'];
@@ -48,25 +49,19 @@ class VacationController extends \BaseController {
 		
 		$vacation->save();
 		
-		return Redirect::route('employees.index');
+		return Redirect::route('employees.edit', ['employees'=>$input['employee_id']]);
 	}
 	
 	/**
 	 * Validates Vacation form data
 	 * @param array $data
 	 * @throws Exception
-	 * @return boolean
+	 * @return Validator $validator
 	 */
 	protected function validate($data)
 	{
-		$validator = new Validator();
-		$validation = $validator->make($data, $this->rules);
+		$validator = Validator::make($data, $this->rules);
 		
-		if($validation->fails())
-		{
-			throw new Exception('Validation Failed');
-		}
-		
-		return true;
+		return $validator;
 	}
 }

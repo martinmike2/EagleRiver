@@ -7,10 +7,12 @@
 		<tr>
 			<td>{{Form::label('startDate', 'Start Date')}}:</td>
 			<td>{{Form::input('date', 'startDate')}}</td>
+			<td>{{$errors->first('startDate')}}</td>
 		</tr>
 		<tr>
 			<td>{{Form::label('numOfDays', 'Number of days requested')}}:</td>
 			<td>{{Form::number('numOfDays')}}</td>
+			<td>{{$errors->first('numOfDays')}}</td>
 		</tr>
 		</table>
 		{{Form::submit('Submit')}}

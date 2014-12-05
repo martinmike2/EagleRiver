@@ -8,7 +8,8 @@
 	</head>
 	<body>
 		<ul class="nav nav-pills">
-			<li><a href="/employees">Home</a>
+			<li><a href="/employees">Home</a></li>
+			<li><a href="/logout">Logout</a></li>
 		</ul>
 		<div class="container">
 			@yield('content')

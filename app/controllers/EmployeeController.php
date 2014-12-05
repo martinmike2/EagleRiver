@@ -1,7 +1,6 @@
 <?php
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Factory as Validator;
 
 class EmployeeController extends \BaseController {
 	
@@ -13,7 +12,7 @@ class EmployeeController extends \BaseController {
 			'firstName'			=>	'required',
 			'lastName'			=>	'required',
 			'employeeGender'	=>	'required',
-			'dateOfHire'		=>	'required'
+			'dateOfHire'		=>	'sometimes|required'
 	];
 
 	/**
@@ -49,10 +48,11 @@ class EmployeeController extends \BaseController {
 		
 		$input = Input::all();
 		
-		try {
-			$this->validate($input);
-		} catch (Exception $e) {
-			return Redirect::back();
+		$validation = $this->validate($input);
+		
+		if($validation->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validation);
 		}
 		
 		$employee = new Employee();
@@ -97,11 +97,13 @@ class EmployeeController extends \BaseController {
 	{
 		$input = Input::all();
 		
-		try {
-			$this->validate($input);
-		} catch (Exception $e) {
-			return Redirect::back();
+		$validation = $this->validate($input);
+		
+		if($validation->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validation);
 		}
+		
 		
 		try {
 			$employee = Employee::findOrFail($id);
@@ -109,8 +111,6 @@ class EmployeeController extends \BaseController {
 			$employee->firstName = $input['firstName'];
 			$employee->lastName = $input['lastName'];
 			$employee->employeeGender = $input['employeeGender'];
-			$employee->dateOfHire = $input['dateOfHire'];
-			$employee->terminationDate = $input['terminationDate'];
 			
 			$employee->save();
 			
@@ -140,16 +140,9 @@ class EmployeeController extends \BaseController {
 	 */
 	public function validate(array $data)
 	{
-		$validator = new Validator();
-		$validation = $validator->make($data, $this->rules);
+		$validator = Validator::make($data, $this->rules);
 		
-		if($validation->fails())
-		{
-			throw new Exception('Validation failed');
-		}
-		
-		return true;
-		
+		return $validator;
 	}
 
 }

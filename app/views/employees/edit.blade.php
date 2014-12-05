@@ -4,9 +4,9 @@
 <h3>Employee</h3>
 	{{Form::model($employee, ['route'=>['employees.update', $employee->id], 'method' => 'patch'])}}
 		<table class='table'>
-			<tr><td>{{Form::label('firstName', 'First Name')}}:</td><td>{{Form::text('firstName')}}</td></tr>
-			<tr><td>{{Form::label('lastName', 'Last Name')}}:</td><td>{{Form::text('lastName')}}</td></tr>
-			<tr><td>{{Form::label('employeeGender', 'Gender')}}:</td><td>{{Form::select('employeeGender', array('M'=>'M','F'=>'F'), 'M')}}</td></tr>
+			<tr><td>{{Form::label('firstName', 'First Name')}}:</td><td>{{Form::text('firstName')}}</td><td>{{$errors->first('firstName')}}</td></tr>
+			<tr><td>{{Form::label('lastName', 'Last Name')}}:</td><td>{{Form::text('lastName')}}</td><td>{{$errors->first('lastName')}}</td></tr>
+			<tr><td>{{Form::label('employeeGender', 'Gender')}}:</td><td>{{Form::select('employeeGender', array('M'=>'M','F'=>'F'), 'M')}}</td><td>{{$errors->first('employeeGender')}}</td></tr>
 			<tr><td><strong>Date of Hire</strong>:</td><td>{{ date('d-m-y', strtotime($employee->dateOfHire))}}</td></tr>
 			<tr><td><strong>Termination Date</strong>:</td>
 					@if($employee->terminationDate != '0000-00-00 00:00:00')
@@ -16,6 +16,9 @@
 					@endif	
 			</tr>
 		</table>
+		
+		{{Form::submit('Update')}}
+	{{Form::close()}}
 		<h3>Vacations</h3>
 		<table class='table'>
 			<thead>
@@ -33,7 +36,5 @@
 				{{HTML::link('vacations/save/'.$employee->id, 'Add Vacation', ['class'=>'btn'])}}
 			</tfooter>
 		</table>
-		
-		{{Form::submit('Update')}}
-	{{Form::close()}}
+
 @stop
